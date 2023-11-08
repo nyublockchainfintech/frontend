@@ -11,7 +11,11 @@ module.exports = {
    
       },
       colors : {
-        'darkgreen': '#00483C',
+        'backgreen': '#00483C',
+        'tablegreen': '#195A50',
+      },
+      opacity: {
+        '30': '0.3',
       }
     },
   },

@@ -16,7 +16,7 @@ export default function Home() {
   return (
 
     <Layout>
-      <h1 className="text-3xl font-bold mb-4">Active Tables</h1>
+      <h1 className="text-3xl font-bold mb-4 text-white">ACTIVE TABLES</h1>
       <TableListComponent tables={tables} />
     </Layout>
     
