@@ -38,10 +38,10 @@ export default function Home() {
       </Link>
       <div className="absolute right-0 top-0 mt-10 mr-10">
         <Image 
-          src="/images/playing_cards.svg" // Replace with your actual image path
+          src="/images/playing_cards.svg" 
           alt="Playing Cards" 
-          width={150} // Adjust size as needed
-          height={200} // Adjust size as needed
+          width={150} 
+          height={200} 
           className="drop-shadow-2xl"
         />
       </div>

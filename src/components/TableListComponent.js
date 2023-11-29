@@ -5,9 +5,9 @@ import Table from './Table';
 const TableListComponent = ({ tables }) => {
 
     return (
-        <div className = "my-8">
+        <div className = "my-8 grid grid-cols-1 sm:grid-cols-2 gap-2">
             {tables.map((table, index) => (
-                <div key = {index} className = "bg-tablegreen shadow-lg rounded-lg p-4 mb-4 text-black w-1/2 flex justify-between items-center text-xs sm:text-base"> 
+                <div key = {index} className = "bg-tablegreen shadow-lg rounded-lg p-4 mb-4 text-black w-1/2 flex justify-between items-center text-xs sm:text-sm"> 
                 <div className = "flex flex-row">
                     <Image src = "/images/Group 31.png" alt="Chip" width={20} height={20} className="w-16 h-16 mr-4"/>
                  <div className="flex flex-col">
