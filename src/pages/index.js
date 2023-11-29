@@ -1,25 +1,50 @@
-import Layout from "../components/Layout";
-import TableListComponent from "../components/TableListComponent";
-
-
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Home() {
-  const tables = [ 
-    {name: "Varun's Bobst Group Study Room", blinds: '10K/20K', players: 9, maxPlayers: 10, duration: '1.2H/2.5H'},
-    {name: "Samay's Founders Hall Lounge", blinds: '25/50', players: 4, maxPlayers: 6, duration: '0.9H/2H'},
-    {name: "Vishakh's 3N Computer Lab", blinds: '50/100', players: 4, maxPlayers: 10, duration: '.6H/1.5H'},
-    {name: "Vaikunthan's 370 Jay Street", blinds: '500/1K', players: 7, maxPlayers: 8, duration: '1.9H/2.5H'},
-    {name: "Akhil's Stern UC-15", blinds: '1K/2K', players: 6, maxPlayers: 6, duration: '1.8H/2.5H'},
-    {name: "Sean's Off-Campus Apartment", blinds: '5/10', players: 3, maxPlayers: 10, duration: '.4H/3.5H'},
-    {name: "Babu's Basement", blinds: '25K/50K', players: 2, maxPlayers: 10, duration: '.2H/4.5H'}
-  ];
-  return (
+  const router = useRouter();
+  const [email, setEmail] = useState('');
+  const handleLogin = async (event) => {
+    event.preventDefault();
 
-    <Layout>
-      <h1 className="text-3xl font-bold mb-4 text-white">ACTIVE TABLES</h1>
-      <TableListComponent tables={tables} />
-    </Layout>
-    
-    
-  );
+    router.push('/TablesPage');
+
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center h-screen bg-green-900 text-white p-4">
+      <div className="text-center mb-6">
+        <p className="text-sm uppercase tracking-widest">- Welcome to our Poker dApp -</p>
+        <h1 className="text-4xl font-bold mt-2">NYU Blockchain & Fintech</h1>
+        <p className="mt-2">NYU's community in blockchain & fintech</p>
+      </div>
+      <form className="flex flex-col items-center w-full max-w-xs" onSubmit={handleLogin}>
+        <input 
+          type="email" 
+          placeholder="Enter your NYU email" 
+          className="w-full px-4 py-2 text-black"
+        />
+        <button 
+          type="submit" 
+          className="w-full bg-white text-black px-4 py-2 mt-4"
+        >
+          Log in
+        </button>
+      </form>
+      <Link href="/signup" className="text-white mt-4">
+        Don't have an account? Sign up
+      </Link>
+      <div className="absolute right-0 top-0 mt-10 mr-10">
+        <Image 
+          src="/images/playing_cards.svg" // Replace with your actual image path
+          alt="Playing Cards" 
+          width={150} // Adjust size as needed
+          height={200} // Adjust size as needed
+          className="drop-shadow-2xl"
+        />
+      </div>
+    </div>
+  )
 }

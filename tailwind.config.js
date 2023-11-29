@@ -16,7 +16,10 @@ module.exports = {
       },
       opacity: {
         '30': '0.3',
-      }
+      },
+      fontSize: {
+        'xxs': '.5rem',
+      },
     },
   },
   plugins: [],

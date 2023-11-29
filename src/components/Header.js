@@ -1,12 +1,14 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Header() {
     return (
-        <header className="bg-white bg-opacity-30 text-white">
-        <nav className="container mx-auto py-3 flex justify-between items-center">
-          <Image src = "/images/logo.svg" alt="Logo" width={50} height={50}/>
-          <div className="flex justify-center flex-grow space-x-20 py-2">
-            <a href="/play" className="hover:text-gray-300 font-semibold text-2xl">PLAY</a>
+        <header className="text-white">
+        <nav className="container mx-auto py-3 flex justify-between items-center mt-3 h-20">
+          <div className="bg-white bg-opacity-30 flex justify-start flex-grow space-x-20 py-2">
+            <Link href="">
+            <Image src = "/images/playing_cards.svg" alt = "play" width={50} height={50}/>
+            </Link>
             <a href="/friends" className="hover:text-gray-300 font-semibold text-2xl">FRIENDS</a>
             <a href="/profile" className="hover:text-gray-300 font-semibold text-2xl">PROFILE</a>
             <a href="/settings" className="hover:text-gray-300 font-semibold text-2xl">SETTINGS</a>
