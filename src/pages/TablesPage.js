@@ -1,5 +1,6 @@
 import Layout from "../components/Layout";
 import TableListComponent from "../components/TableListComponent";
+import Image from 'next/image';
 
 
 
@@ -16,7 +17,21 @@ export default function Home() {
   return (
 
     <Layout>
+      <div className = "flex flex-row">
       <h1 className="text-3xl font-bold mb-4 text-white">ACTIVE TABLES</h1>
+      <button className="flex items-center justify-center bg-background-color text-white bg-white bg-opacity-10 rounded-md ml-6 px-4 h-10 w-24">
+      Filter
+      <span className="ml-2 flex items-center justify-center">
+    <Image src="/images/filter_list.svg" width={24} height={24} alt="Filter Icon"/>
+      </span>
+  </button>
+  <button className="flex items-center justify-center bg-background-color text-white bg-white bg-opacity-10 rounded-md ml-6 px-4 h-10">
+      Create Table
+      <span className="ml-2 flex items-center justify-center">
+    <Image src="/images/add.svg" width={15} height={15} alt="Filter Icon"/>
+      </span>
+  </button>
+      </div>
       <TableListComponent tables={tables} />
     </Layout>
     

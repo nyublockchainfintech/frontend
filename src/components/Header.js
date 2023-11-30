@@ -16,6 +16,9 @@ export default function Header() {
             <Image src = "/images/account_circle.svg" alt = "account_settings" width={50} height={50}/>
             </Link>
           </div>
+          <Link href = "/"  className = "text-white bg-white bg-opacity-10 rounded-md p-2 pl-4 pr-4">
+            Sign Out 
+          </Link>
         </nav>
       </header>
     );

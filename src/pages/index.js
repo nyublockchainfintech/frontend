@@ -26,7 +26,7 @@ export default function Home() {
           <input
             type="email"
             placeholder="Enter your NYU email"
-            className="w-full px-4 py-2 text-white background-color"
+            className="w-full px-4 py-2 text-black background-color"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
