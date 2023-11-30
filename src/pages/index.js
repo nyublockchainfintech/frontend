@@ -43,15 +43,13 @@ export default function Home() {
       </div>
 
      
-      <div className="flex-grow flex justify-center items-center max-w-md">
-      <div className="ml-auto">
+      <div className="flex items-center max-w-md ml-52">
         <Image
           src="/images/Group 291.svg"
           alt="Cards"
           width={500}
           height={500}
         />
-        </div>
       </div>
 
       

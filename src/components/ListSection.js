@@ -14,7 +14,7 @@ const ListSection = ({ title, items, isActive }) => {
                 alt={item.name} 
               />
   
-              {/* Background and content */}
+              {/* background and content */}
               <div 
                 className={`flex items-center justify-between pl-12 pr-2 py-2 bg-white bg-opacity-10 rounded-xl ${
                   isActive ? 'bg-green-500' : 'bg-gray-500'
