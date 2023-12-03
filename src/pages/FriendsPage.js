@@ -1,4 +1,4 @@
-import Header from '../components/Header';
+
 import Layout from '../components/Layout';
 import Image from 'next/image';
 import SearchBar from '../components/SearchBar';

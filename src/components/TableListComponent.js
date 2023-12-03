@@ -1,6 +1,6 @@
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import Table from './Table';
 
 const TableListComponent = ({ tables }) => {
     const allTables = [...tables, ...tables]
@@ -29,7 +29,9 @@ const TableListComponent = ({ tables }) => {
                 </div>
               
                 </div>
+                <Link href = "/PokerTablePage">
                 <Image src="/images/arrow_back.svg" alt="Back" width={20} height={20} className="w-4 h-4 mr-1" />
+                </Link>
                 </div>
                
             ))}
