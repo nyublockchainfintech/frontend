@@ -11,6 +11,7 @@ export default function Header() {
   const handleSignOut = () => {
     setIsSignedOut(true);
    
+    router.push('/');
   };
 
   const friendsActive = pathname === '/FriendsPage'
