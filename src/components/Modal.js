@@ -2,7 +2,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 const Modal = ({ isOpen, onClose }) => {
-  // State for form fields (example: buy-in amount)
   const [buyIn, setBuyIn] = useState(50);
 
   if (!isOpen) return null;

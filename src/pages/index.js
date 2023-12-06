@@ -4,12 +4,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import useWebSocket from 'react-use-websocket';
 import webSocketService from '../../webSocketService';
+import { ethers } from 'ethers';
 
 const TEST_URI = 'ws://localhost:8000/ws';
 
 export default function Home() {
   const router = useRouter();
   const [email, setEmail] = useState('');
+  const [currentAccount, setCurrentAccount] = useState(null);
 
 
 
@@ -39,12 +41,28 @@ export default function Home() {
 
   }; 
 
-
-
-
- 
   
-    
+
+  const onClickConnect = async () => {
+    if (!window.ethereum) {
+      alert("Please install MetaMask");
+      return;
+    }
+
+  console.log('Ethers:', ethers);
+  console.log('window.ethereum:', window.ethereum);
+
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    provider
+      .send("eth_requestAccounts", [])
+      .then((accounts) => {
+        if (accounts.length > 0) setCurrentAccount(accounts[0]);
+      })
+      .catch((e) => console.log(e));
+
+    const signer = provider.getSigner();
+    //set contract
+  };
 
 
   return (
@@ -71,6 +89,9 @@ export default function Home() {
             Log in
           </button>
         </form>
+        <Link href="#" onClick={onClickConnect} className="text-blue-500 hover:text-blue-700">
+          Connect to MetaMask
+        </Link>
         <Link href="/signup">
           Don't have an account? Sign up
         </Link>

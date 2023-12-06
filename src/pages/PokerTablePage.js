@@ -19,7 +19,7 @@ const PokerTablePage = () =>  {
   return (
     <div className="bg-background-color min-h-screen">
       <div className="flex flex-col items-center justify-center h-screen bg-background-color z-0">
-        <header className = "bg-white bg-opacity-50 fixed top-0 w-screen h-fit">
+        <header className = "bg-white bg-opacity-50 fixed top-0 mb-5 w-screen h-fit">
         <div class="flex justify-end items-center p-4 bg-white bg-opacity-50">
     <div class="flex items-center space-x-4">
       <div class="rounded-full bg-green-500 py-2 px-4 z-40">
