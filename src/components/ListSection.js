@@ -1,4 +1,5 @@
 import React from 'react';
+{/* creates a section of a list with a title, and for each item in the section, it displays an avatar, name, and status information */}
 const ListSection = ({ title, items, isActive }) => {
     return (
       <div>
