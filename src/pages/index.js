@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import useWebSocket from 'react-use-websocket';
 import webSocketService from '../../webSocketService';
-import { ethers } from 'ethers';
+import Web3 from 'web3';
 
 const TEST_URI = 'ws://localhost:8000/ws';
 
@@ -41,28 +41,22 @@ export default function Home() {
 
   }; 
 
-  
+  async function onClickConnect() {
 
-  const onClickConnect = async () => {
-    if (!window.ethereum) {
-      alert("Please install MetaMask");
-      return;
+  if (window.ethereum) {
+    const web3 = new Web3(window.ethereum);
+    try {
+      await window.ethereum.enable(); // Request access
+      const accounts = await web3.eth.getAccounts(); // Get accounts
+      setCurrentAccount(accounts[0]);
+    } catch (error) {
+      console.error(error);
     }
+  } else {
+    console.log('MetaMask is not installed');
+  }
 
-  console.log('Ethers:', ethers);
-  console.log('window.ethereum:', window.ethereum);
-
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    provider
-      .send("eth_requestAccounts", [])
-      .then((accounts) => {
-        if (accounts.length > 0) setCurrentAccount(accounts[0]);
-      })
-      .catch((e) => console.log(e));
-
-    const signer = provider.getSigner();
-    //set contract
-  };
+}
 
 
   return (
