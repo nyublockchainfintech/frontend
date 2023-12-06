@@ -1,6 +1,8 @@
 import Layout from "../components/Layout";
+import { useState } from "react";
 import TableListComponent from "../components/TableListComponent";
 import Image from 'next/image';
+import Modal from "../components/Modal";
 import useWebSocket from 'react-use-websocket';
 
 
@@ -9,6 +11,9 @@ export default function TablesPage() {
   const WS_URL = 'ws://127.0.0.1:8000/ws/';
 
   const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(WS_URL);
+
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const tables = [ 
     {name: "Varun's Bobst Group Study Room", blinds: '10K/20K', players: 9, maxPlayers: 10, duration: '1.2H/2.5H'},
@@ -30,13 +35,14 @@ export default function TablesPage() {
     <Image src="/images/filter_list.svg" width={24} height={24} alt="Filter Icon"/>
       </span>
   </button>
-  <button className="flex items-center justify-center bg-background-color text-white bg-white bg-opacity-10 rounded-md ml-6 px-4 h-10">
+  <button className="flex items-center justify-center bg-background-color text-white bg-white bg-opacity-10 rounded-md ml-6 px-4 h-10 "  onClick={() => setIsModalOpen(true)}>
       Create Table
       <span className="ml-2 flex items-center justify-center">
     <Image src="/images/add.svg" width={15} height={15} alt="Filter Icon"/>
       </span>
   </button>
       </div>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       <TableListComponent tables={tables} />
     </Layout>
     
