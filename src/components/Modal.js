@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Link from 'next/link';
 
 const Modal = ({ isOpen, onClose }) => {
   // State for form fields (example: buy-in amount)
@@ -8,7 +9,7 @@ const Modal = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
-      <div className="bg-background-color rounded-lg p-6 w-full max-w-lg">
+      <div className="bg-green-800 rounded-lg p-6 w-full max-w-lg z-40">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-white text-2xl font-semibold">Create New Table</h2>
           <button onClick={onClose} className="text-white text-2xl">×</button>
@@ -35,15 +36,35 @@ const Modal = ({ isOpen, onClose }) => {
           <div className="grid grid-cols-3 gap-4 mb-4">
             <select className="p-2 rounded text-black">
               <option>.50/1</option>
-              {/* other options */}
+                <option>1/2</option>
+                <option>2/5</option>
+                <option>5/10</option>
+                <option>10/20</option>
+                <option>25/50</option>
             </select>
             <select className="p-2 rounded text-black">
+                <option>2 People</option>
+                <option>3 People</option>
+                <option>4 People </option>
               <option>5 People</option>
-              {/* other options */}
+                <option>6 People</option>
+                <option>7 People</option>
+                <option>8 People</option>
+                <option>9 People</option>
+                <option>10 People</option>
+              
             </select>
             <select className="p-2 rounded text-black">
               <option>1 hr</option>
-              {/* other options */}
+                <option>2 hr</option>
+                <option>3 hr</option>
+                <option>4 hr</option>
+                <option>5 hr</option>
+                <option>6 hr</option>
+                <option>7 hr</option>
+                <option>8 hr</option>
+                <option>9 hr</option>
+                <option>10 hr</option>
             </select>
           </div>
           <div className="mb-4">
@@ -54,7 +75,9 @@ const Modal = ({ isOpen, onClose }) => {
             />
             {/* Render list of invited friends here */}
           </div>
+          <Link href = "/PokerTablePage">
           <button className="w-full bg-white bg-opacity-40 p-2 rounded text-white">Start Game</button>
+          </Link>
         </div>
       </div>
     </div>

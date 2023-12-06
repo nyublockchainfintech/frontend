@@ -1,43 +1,51 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
 import useWebSocket from 'react-use-websocket';
+import webSocketService from '../../webSocketService';
+
+const TEST_URI = 'ws://localhost:8000/ws';
 
 export default function Home() {
   const router = useRouter();
   const [email, setEmail] = useState('');
 
-  const WS_URL = 'ws://127.0.0.1:3000';
 
-  const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(WS_URL, {
-    onOpen: () => console.log(`Connected to WebSocket`),
-  });
 
-  const onSubmitClick = useCallback(() => {
-    sendJsonMessage({ 
-      command: "JOIN",
-      content: email,
-      message: `${email} Joined the game`,
+    
+  useEffect(() => {
+    const ws = new webSocketService(TEST_URI);
+    
+    ws.connect((message) => {
+      console.log(message);
     });
-
-    console.log("Sent message");
+    
+    // Send a message to the server on connection established
+    ws.sendMessage({ command: 'Hello' });
+  
+    // Disconnect when the component unmounts
+    return () => {
+      ws.disconnect();
+    };
   }, []);
+
+  
+  
+    
 
   const handleLogin = async (event) => {
     event.preventDefault();
 
-    try {
-      // Send message to server
-      onSubmitClick();
-  
-      router.push('/TablesPage');
+  }; 
 
-    } catch (error) {
-      console.error("Error sending message:", error);
-      // error handling
-    }
-  };
+
+
+
+ 
+  
+    
+
 
   return (
     <div className="flex h-screen background-color text-white">
