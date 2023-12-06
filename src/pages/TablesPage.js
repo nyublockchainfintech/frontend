@@ -1,10 +1,15 @@
 import Layout from "../components/Layout";
 import TableListComponent from "../components/TableListComponent";
 import Image from 'next/image';
-
+import useWebSocket from 'react-use-websocket';
 
 
 export default function TablesPage() {
+
+  const WS_URL = 'ws://127.0.0.1:8000/ws/';
+
+  const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(WS_URL);
+
   const tables = [ 
     {name: "Varun's Bobst Group Study Room", blinds: '10K/20K', players: 9, maxPlayers: 10, duration: '1.2H/2.5H'},
     {name: "Samay's Founders Hall Lounge", blinds: '25/50', players: 4, maxPlayers: 6, duration: '0.9H/2H'},
