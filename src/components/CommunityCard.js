@@ -1,4 +1,5 @@
 const CommunityCard = ({ community }) => {
+    {/* Creates the button that individuals use to join specific communities to be white, gray, black, and rounded */}
     return (
       <div className="p-4 bg-white bg-opacity-20 mb-4 rounded-xl">
         <div className="flex items-center space-x-2">
