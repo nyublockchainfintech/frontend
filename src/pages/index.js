@@ -1,16 +1,41 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
+import useWebSocket from 'react-use-websocket';
 
 export default function Home() {
   const router = useRouter();
   const [email, setEmail] = useState('');
+
+  const WS_URL = 'ws://127.0.0.1:8000/ws/';
+
+  const { sendJsonMessage, lastJsonMessage, readyState, getWebSocket } = useWebSocket(WS_URL);
+
+  const onSubmitClick =  useCallback(() => {
+    sendJsonMessage({ 
+        command: "JOIN",
+        content: email,
+        message: `${email} Joined the game`,
+      });
+  }, [])
+
+
   const handleLogin = async (event) => {
     event.preventDefault();
-   
-    //login 
-    router.push('/TablesPage');
+
+    try {
+      // Send message to server
+
+      onSubmitClick();
+  
+      router.push('/TablesPage');
+
+    } catch (error) {
+
+      console.error("Error sending message:", error);
+      // error handling
+    }
   };
 
   return (
