@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-
+{/* shows card*/}
 const Card = ({show}) => {
   const [chosenCard, setChosenCard] = useState(null);
-
+{/* code below collects card in a list to randomly pick card */}
   const cardNames = [
     "Group 65.svg",
     "Group 66.svg",
@@ -39,7 +39,7 @@ const Card = ({show}) => {
   ];
 
   const chooseRandomCard = () => {
-    const randomIndex = Math.floor(Math.random() * cardNames.length);
+    const randomInd ex = Math.floor(Math.random() * cardNames.length);
     const randomCard = cardNames[randomIndex];
     console.log(randomCard);
     setChosenCard(randomCard);
