@@ -1,4 +1,5 @@
 const SearchBar = ({ onSearch }) => {
+    {/* creates a long gray search-bar with a green border */}
     return (
       <form className="my-4" onSubmit={onSearch}>
         <input
