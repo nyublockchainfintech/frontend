@@ -3,7 +3,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const TableListComponent = ({ tables }) => {
+    
+    
     const allTables = [...tables, ...tables]
+
+
     return (
         <div className = "my-8 grid grid-cols-1 sm:grid-cols-2 gap-2">
             {allTables.map((table, index) => (
@@ -29,9 +33,9 @@ const TableListComponent = ({ tables }) => {
                 </div>
               
                 </div>
-                <Link href = "/PokerTablePage">
-                <Image src="/images/arrow_back.svg" alt="Back" width={20} height={20} className="w-4 h-4 mr-1" />
-                </Link>
+                {/* <Link href = "/PokerTablePage"> */}
+                <Image src="/images/arrow_back.svg" alt="Back" width={20} height={20} className="w-4 h-4 mr-1"  />
+                {/* </Link> */}
                 </div>
                
             ))}

@@ -12,7 +12,7 @@ export default function TablesPage() {
 
   {/*
   
-  Add a receiver for the all messages
+  Add a receiver for the all tables
 
   */}
 
