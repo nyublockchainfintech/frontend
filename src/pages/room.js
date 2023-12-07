@@ -209,7 +209,7 @@ return (
       <ActionButton text="Fold" handle={handleFold} />
       <ActionButton text="Call" handle={handleCall} />
       <input type="number" placeholder="Bet" className="w-20 p-2 rounded text-black" onChange={(e) => setBet(e.target.value)} />
-      <ActionButton text="Raise" handleRaise />
+      <ActionButton text="Raise" handle={handleRaise} />
     </div>
 
     <div className="fixed bottom-0 left-0 p-4 justify-center space-x-4">
