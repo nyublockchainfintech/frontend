@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useWebSocketContext } from '@/components/WebSocket';
 // import { useWebSocket } from 'react-use-websocket';
 
 export default function Home() {

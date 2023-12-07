@@ -1,9 +1,29 @@
-import React from "react";
+import React, { useEffect, useCallback } from "react";
 import Table from "../components/Table";
 import ActionButton from "../components/ActionButton";
+import { useWebSocketContext } from "@/components/WebSocket";
 
 const PokerTablePage = () =>  {
   
+  const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocketContext();
+
+  const sitAtTable = useCallback(() => {
+    sendJsonMessage({ 
+        "MESSAGE TYPE": "JOIN",
+        "MESSAGE": {
+            "GAME_ID": "1",
+            "PLAYER_NAME": "John Doe",
+            "BALANCE": "100"
+        }
+    })
+    
+    console.log("Sat Down");
+  }, []);
+
+  useEffect(() => {
+    sitAtTable();
+  }, []);
+
   const players = [ 
   {id: 1, name: "Shubhi", status: "In-Lobby", avatar: "/images/Ellipse 10pfp.svg", money: "17.4K"},
   {id: 2, name: "Shriya", status: "In-Game",  avatar: "/images/Ellipse 10pfp.svg", money: "17.4K"}, 
