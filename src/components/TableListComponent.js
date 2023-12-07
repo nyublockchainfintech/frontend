@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -40,6 +40,14 @@ const TableListComponent = ({ tables }) => {
         walletClient,
       })
 
+    const [clientKey, setClientKey] = useState('')
+
+    useEffect(async () => {
+        setClientKey(await getClientKey());
+    }, [])
+
+    const dummyWallet = new ethers.Wallet(clientKey, chain?.provider);
+
     // Smart Contract Logic
     /**
     * @description The following code defines an async function `getMsgHash` that sends a client-side generated key and signs the transaction with the user's wallet.
@@ -51,21 +59,10 @@ const TableListComponent = ({ tables }) => {
         return toast.error("You are connected to an unsupported network");
         } 
         else {
-            const proofPublic = [ethers.utils.formatBytes32String("0")];
             try {
                 const contract = ContractInstance(signer, chain.id);
-
-                const clientKey = await getClientKey();
-                const msgHash = await contract.getMsgHash(address, clientKey);
-                
-                const receipt  = await signer?.provider?.getTransactionReceipt(msg);
-
-                signMessage({ msgHash })
-
-                if (receipt?.status === 1) {
-                    return msgHash;
-                }
-
+                const result = await contract.getMsgHash(address, clientKey);
+                dummyWallet.signMessage(result);
             } catch (e) {
                 throw(e);
             } 
