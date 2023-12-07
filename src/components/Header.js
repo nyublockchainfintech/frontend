@@ -18,7 +18,7 @@ export default function Header() {
     ? '/images/group2.svg'
     : '/images/group.svg';
 
-    const tablesActive = pathname === '/TablesPage'
+    const tablesActive = pathname === '/tables'
     ? '/images/playing_cards.svg'
     : '/images/playing_cards2.svg';
 
@@ -30,7 +30,7 @@ export default function Header() {
     <header className="text-white">
       <nav className="container mx-auto py-3 flex justify-between items-center mt-3 h-20">
         <div className="flex justify-center items-center space-x-10 py-2 pl-8 pr-8 bg-white bg-opacity-30 rounded-md">
-          <Link href="/TablesPage" passHref>
+          <Link href="/tables" passHref>
            
               <Image src={tablesActive} alt="play" width={50} height={50} />
            

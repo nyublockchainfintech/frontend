@@ -1,9 +1,55 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useWebSocketContext } from './WebSocket';
 
 const TableListComponent = ({ tables }) => {
+    
+    const router = useRouter();
+    const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocketContext();
+
+    function convertToSlug(inputString) {
+      // Replace spaces with underscores
+      const stringWithoutSpaces = inputString.replace(/\s+/g, '_');
+      
+      // Remove non-alphanumeric characters (except underscores)
+      const slug = stringWithoutSpaces.replace(/[^\w\s]/gi, '');
+      
+      // Convert to lowercase
+      return slug.toLowerCase();
+    }
+    
     const allTables = [...tables, ...tables]
+
+
+    const onSubmitClick = useCallback(() => {
+        sendJsonMessage({ 
+            "MESSAGE TYPE": "JOIN",
+            "MESSAGE": {
+                "GAME_ID": "1",
+                "PLAYER_NAME": "John Doe",
+                "BALANCE": "100"
+            }
+        })
+        
+        console.log("Sent message");
+      }, []);
+    
+      const handleJoin = async (event, name) => {
+        event.preventDefault();
+    
+        try {
+          // Send message to server
+          onSubmitClick();
+      
+    
+        } catch (error) {
+          console.error("Error sending message:", error);
+          // error handling
+        }
+      };
+
     return (
         <div className = "my-8 grid grid-cols-1 sm:grid-cols-2 gap-2">
             {allTables.map((table, index) => (
@@ -29,8 +75,13 @@ const TableListComponent = ({ tables }) => {
                 </div>
               
                 </div>
-                <Link href = "/PokerTablePage">
-                <Image src="/images/arrow_back.svg" alt="Back" width={20} height={20} className="w-4 h-4 mr-1" />
+                <Link
+                    href={{
+                        pathname: '/room',
+                        query: { table: convertToSlug(table.name) },
+                    }}
+                >
+                    <Image src="/images/arrow_back.svg" alt="Back" width={20} height={20} className="w-4 h-4 mr-1" />
                 </Link>
                 </div>
                

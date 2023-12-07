@@ -7,6 +7,7 @@ import webSocketService from '../../webSocketService';
 import Web3 from 'web3';
 
 const TEST_URI = 'ws://localhost:8000/ws';
+import { useWebSocketContext } from '@/components/WebSocket';
 
 export default function Home() {
   const router = useRouter();
@@ -14,22 +15,27 @@ export default function Home() {
   const [currentAccount, setCurrentAccount] = useState(null);
 
 
+  const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocketContext();
 
-    
-  useEffect(() => {
-    const ws = new webSocketService(TEST_URI);
-    
-    ws.connect((message) => {
-      console.log(message);
-    });
-    
-    // Send a message to the server on connection established
-    ws.sendMessage({ command: 'Hello' });
-  
-    // Disconnect when the component unmounts
-    return () => {
-      ws.disconnect();
-    };
+  const onSubmitClick = useCallback(() => {
+    sendJsonMessage({
+      "MESSAGE TYPE": "CREATE",
+      "MESSAGE": {
+          "PLAYER_NAME": "John Doe",
+          "BALANCE": 100,
+          "BUY_IN": 20,
+          "BLINDS": [10, 20]
+      }
+  })
+
+    // sendJsonMessage(joinMessage);
+    //   { 
+    //   command: "JOIN",
+    //   content: email,
+    //   message: `${email} Joined the game`,
+    // });
+
+    console.log("Sent message");
   }, []);
 
   
@@ -38,6 +44,20 @@ export default function Home() {
 
   const handleLogin = async (event) => {
     event.preventDefault();
+
+    try {
+
+      // Send message to server
+      onSubmitClick();
+
+      router.push({
+        pathname: '/tables',
+      });
+
+    } catch (error) {
+      console.error("Error sending message:", error);
+      // error handling
+    }
 
   }; 
 
