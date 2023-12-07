@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -15,7 +15,6 @@ const TableListComponent = ({ tables }) => {
     
     const router = useRouter();
     const { sendJsonMessage, lastJsonMessage, readyState, getClientKey } = useWebSocketContext();
-
     const { data: walletClient, isError, isLoading } = useWalletClient()
     const { chain } = useNetwork();
     const { address, isConnected } = useAccount();
@@ -34,19 +33,19 @@ const TableListComponent = ({ tables }) => {
     
     const allTables = [...tables, ...tables]
 
-    const contract = useContract({
-        address: '0x69d7d375cdC5037c182a1eCEB5AC4C6EdE3CAD58', // goerli address
-        abi: myAbi, // change
-        walletClient,
-      })
+    // const contract = useContract({
+    //     address: '0x69d7d375cdC5037c182a1eCEB5AC4C6EdE3CAD58', // goerli address
+    //     abi: myAbi, // change
+    //     walletClient,
+    //   })
 
-    const [clientKey, setClientKey] = useState('')
+    // const [clientKey, setClientKey] = useState('')
 
-    useEffect(async () => {
-        setClientKey(await getClientKey());
-    }, [])
+    // useEffect(async () => {
+    //     setClientKey(await getClientKey());
+    // }, [])
 
-    const dummyWallet = new ethers.Wallet(clientKey, chain?.provider);
+    // const dummyWallet = new ethers.Wallet(clientKey, chain?.provider);
 
     // Smart Contract Logic
     /**
@@ -60,7 +59,7 @@ const TableListComponent = ({ tables }) => {
         } 
         else {
             try {
-                const contract = ContractInstance(signer, chain.id);
+                // const contract = ContractInstance(signer, chain.id);
                 const result = await contract.getMsgHash(address, clientKey);
                 dummyWallet.signMessage(result);
             } catch (e) {
@@ -105,9 +104,9 @@ const TableListComponent = ({ tables }) => {
         sendJsonMessage({ 
             "MESSAGE TYPE": "JOIN",
             "MESSAGE": {
-                "GAME_ID": "1",
+                "GAME_ID": 1,
                 "PLAYER_NAME": "John Doe",
-                "BALANCE": "100"
+                "PLAYER_BALANCE": 100
             }
         })
         
@@ -139,7 +138,7 @@ const TableListComponent = ({ tables }) => {
                 <div className = "text-gray-300 mt-1 flex flex-row text-xxs sm:text-base">
                 <div className="flex items-center mr-2"> 
                 <Image src="/images/Ellipse 3.svg" alt="Blinds" width={20} height={20} className="w-4 h-4 mr-1" /> 
-                <span>{table.blinds} </span>
+                <span>{table.blinds}</span>
                 </div>
                 <div className="flex items-center mr-2"> 
                 <Image src="/images/groups.svg" alt="Players" width={20} height={20} className="w-4 h-4 mr-1" /> 
@@ -154,6 +153,7 @@ const TableListComponent = ({ tables }) => {
               
                 </div>
                 <Link
+                    onClick={handleJoin}
                     href={{
                         pathname: '/room',
                         query: { table: convertToSlug(table.name) },
