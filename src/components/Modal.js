@@ -10,7 +10,7 @@ const Modal = ({ isOpen, onClose }) => {
   // State for form fields (example: buy-in amount)
   const [name, setName] = useState('');
   const [blinds, setBlinds] = useState([.50, 1]);
-  const [buyIn, setbuyIn] = useState(100)
+  const [buyIn, setBuyIn] = useState(100)
   const [maxPlayers, setMaxPlayers] = useState(2)
   const [duration, setDuration] = useState(1)
   
