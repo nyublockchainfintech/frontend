@@ -8,7 +8,7 @@ import { useWebSocketContext } from '../components/WebSocket';
 
 export default function TablesPage() {
 
-  const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocketContext();
+  const { sendJsonMessage, lastJsonMessage, readyState, getClientKey } = useWebSocketContext();
 
   {/*
   

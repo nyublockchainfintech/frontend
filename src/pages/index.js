@@ -2,18 +2,39 @@ import { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
-import useWebSocket from 'react-use-websocket';
-import webSocketService from '../../webSocketService';
 import Web3 from 'web3';
 
-const TEST_URI = 'ws://localhost:8000/ws';
+import { ethers } from "ethers";
+import { useAccount, useNetwork, useSigner, useConnect, useDisconnect } from "wagmi";
+import { InjectedConnector } from 'wagmi/connectors/injected'
+import { getProvider } from "@wagmi/core";
+
 import { useWebSocketContext } from '@/components/WebSocket';
+
+const Connect = () => {
+
+  const { address, isConnected } = useAccount()
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  })
+  const { disconnect } = useDisconnect()
+
+  if (isConnected)
+    return (
+      <div>
+        Connected to {address}
+        <button onClick={() => disconnect()} className='text-blue-500 hover:text-blue-700 bg-white rounded-xl px-4 p-2'>Disconnect</button>
+      </div>
+    )
+  return <button onClick={() => connect()} className='text-blue-500 hover:text-blue-700 bg-white rounded-xl px-4 p-2'>Connect Wallet</button>
+}
 
 export default function Home() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [currentAccount, setCurrentAccount] = useState(null);
 
+  const { address, isConnected } = useAccount()
 
   const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocketContext();
 
@@ -61,22 +82,22 @@ export default function Home() {
 
   }; 
 
-  async function onClickConnect() {
+//   async function onClickConnect() {
 
-  if (window.ethereum) {
-    const web3 = new Web3(window.ethereum);
-    try {
-      await window.ethereum.enable(); // Request access
-      const accounts = await web3.eth.getAccounts(); // Get accounts
-      setCurrentAccount(accounts[0]);
-    } catch (error) {
-      console.error(error);
-    }
-  } else {
-    console.log('MetaMask is not installed');
-  }
+//   if (window.ethereum) {
+//     const web3 = new Web3(window.ethereum);
+//     try {
+//       await window.ethereum.enable(); // Request access
+//       const accounts = await web3.eth.getAccounts(); // Get accounts
+//       setCurrentAccount(accounts[0]);
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   } else {
+//     console.log('MetaMask is not installed');
+//   }
 
-}
+// }
 
 
   return (
@@ -103,9 +124,10 @@ export default function Home() {
             Log in
           </button>
         </form>
-        <Link href="#" onClick={onClickConnect} className="text-blue-500 hover:text-blue-700">
+        <Connect />
+        {/* <Link href="#" onClick={onClickConnect} className="text-blue-500 hover:text-blue-700">
           Connect to MetaMask
-        </Link>
+        </Link> */}
         <Link href="/signup">
           Don't have an account? Sign up
         </Link>
