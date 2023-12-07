@@ -1,13 +1,19 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
+import useWebSocket from 'react-use-websocket';
+import webSocketService from '../../webSocketService';
+import Web3 from 'web3';
+
+const TEST_URI = 'ws://localhost:8000/ws';
 import { useWebSocketContext } from '@/components/WebSocket';
-// import { useWebSocket } from 'react-use-websocket';
 
 export default function Home() {
   const router = useRouter();
   const [email, setEmail] = useState('');
+  const [currentAccount, setCurrentAccount] = useState(null);
+
 
   const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocketContext();
 
@@ -32,20 +38,46 @@ export default function Home() {
     console.log("Sent message");
   }, []);
 
+  
+  
+    
+
   const handleLogin = async (event) => {
     event.preventDefault();
 
     try {
+
       // Send message to server
       onSubmitClick();
-  
-      router.push('/TablesPage');
+
+      router.push({
+        pathname: '/tables',
+      });
 
     } catch (error) {
       console.error("Error sending message:", error);
       // error handling
     }
-  };
+
+  }; 
+
+  async function onClickConnect() {
+
+  if (window.ethereum) {
+    const web3 = new Web3(window.ethereum);
+    try {
+      await window.ethereum.enable(); // Request access
+      const accounts = await web3.eth.getAccounts(); // Get accounts
+      setCurrentAccount(accounts[0]);
+    } catch (error) {
+      console.error(error);
+    }
+  } else {
+    console.log('MetaMask is not installed');
+  }
+
+}
+
 
   return (
     <div className="flex h-screen background-color text-white">
@@ -71,6 +103,9 @@ export default function Home() {
             Log in
           </button>
         </form>
+        <Link href="#" onClick={onClickConnect} className="text-blue-500 hover:text-blue-700">
+          Connect to MetaMask
+        </Link>
         <Link href="/signup">
           Don't have an account? Sign up
         </Link>

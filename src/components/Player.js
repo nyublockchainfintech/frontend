@@ -7,6 +7,9 @@ const Player = ({ name, avatar, money, index, totalPlayers }) => {
   const angle = (2 * Math.PI / totalPlayers) * index;
   const leftPosition = 50 + radiusX * Math.cos(angle);
   const topPosition = 50 + radiusY * Math.sin(angle);
+  const chips = ['Group 265.svg', 'Group 266.svg', 'Group 269.svg']
+
+ 
 
   const playerStyle = {
     position: 'absolute',
@@ -23,6 +26,7 @@ const Player = ({ name, avatar, money, index, totalPlayers }) => {
       <div className = "bg-white bg-opacity-40 rounded-full text-center w-24 h-12 text-white">
         <p>{name}</p>
       <p>{money}</p>
+      <Image src = "/images/Group 265.svg" alt = "Chips" width = {30} height = {30} />
       </div>
       </div>
       </div>
