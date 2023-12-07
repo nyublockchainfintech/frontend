@@ -3,15 +3,18 @@ import { useState } from "react";
 import TableListComponent from "../components/TableListComponent";
 import Image from 'next/image';
 import Modal from "../components/Modal";
-import useWebSocket from 'react-use-websocket';
+import { useWebSocketContext } from '../components/WebSocket';
 
 
 export default function TablesPage() {
 
-  const WS_URL = 'ws://127.0.0.1:8000/ws/';
+  const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocketContext();
 
-  const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(WS_URL);
+  {/*
+  
+  Add a receiver for the all messages
 
+  */}
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 

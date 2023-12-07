@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useWebSocketContext } from '../components/WebSocket';
+
 
 const Modal = ({ isOpen, onClose }) => {
   // State for form fields (example: buy-in amount)
