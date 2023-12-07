@@ -4,6 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Web3 from 'web3';
 
+import toast from "react-hot-toast";
+
 import { ethers } from "ethers";
 import { useAccount, useNetwork, useSigner, useConnect, useDisconnect } from "wagmi";
 import { InjectedConnector } from 'wagmi/connectors/injected'
@@ -66,18 +68,24 @@ export default function Home() {
   const handleLogin = async (event) => {
     event.preventDefault();
 
-    try {
+    if (!isConnected) {
+      alert("Please connect your wallet");
+      return toast.error("Please connect your wallet");
+    } else {
+          try {
+      
+            // Send message to server
+            onSubmitClick();
+      
+            router.push({
+              pathname: '/tables',
+            });
+      
+          } catch (error) {
+            console.error("Error sending message:", error);
+            // error handling
+          }
 
-      // Send message to server
-      onSubmitClick();
-
-      router.push({
-        pathname: '/tables',
-      });
-
-    } catch (error) {
-      console.error("Error sending message:", error);
-      // error handling
     }
 
   }; 

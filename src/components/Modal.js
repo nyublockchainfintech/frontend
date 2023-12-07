@@ -31,16 +31,6 @@ const Modal = ({ isOpen, onClose }) => {
     setBlinds(blindsMap[selectedValue]);
   };
 
-  handlePplChange = (e) => {
-    const val = e.target.value;
-    setMaxPlayers(val.split(' ')[0]);
-  }
-  
-  handleTimeChange = (e) => {
-    const val = e.target.value;
-    setMaxPlayers(e.target.value.split(' ')[0]);
-  }
-
   const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocketContext();
 
   function convertToSlug(inputString) {
