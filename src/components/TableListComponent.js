@@ -3,11 +3,23 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useWebSocketContext } from './WebSocket';
+import toast from "react-hot-toast";
+import { ethers } from "ethers";
+import { useAccount, useNetwork, useSignMessage, useConnect, useDisconnect, useContract, useWalletClient } from "wagmi";
+import { InjectedConnector } from 'wagmi/connectors/injected'
+import { getProvider } from "@wagmi/core"
+import myAbi from "../contracts/abi.json";
+
 
 const TableListComponent = ({ tables }) => {
     
     const router = useRouter();
-    const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocketContext();
+    const { sendJsonMessage, lastJsonMessage, readyState, getClientKey } = useWebSocketContext();
+
+    const { data: walletClient, isError, isLoading } = useWalletClient()
+    const { chain } = useNetwork();
+    const { address, isConnected } = useAccount();
+    const { signMessage } = useSignMessage();
 
     function convertToSlug(inputString) {
       // Replace spaces with underscores
@@ -22,6 +34,75 @@ const TableListComponent = ({ tables }) => {
     
     const allTables = [...tables, ...tables]
 
+    const contract = useContract({
+        address: '0x69d7d375cdC5037c182a1eCEB5AC4C6EdE3CAD58', // goerli address
+        abi: myAbi, // change
+        walletClient,
+      })
+
+    // Smart Contract Logic
+    /**
+    * @description The following code defines an async function `getMsgHash` that sends a client-side generated key and signs the transaction with the user's wallet.
+    */
+    const getMsgHash = async () => {
+        if (!signer) {
+        return toast.error("Please connect your wallet");
+        } else if (!chain) {
+        return toast.error("You are connected to an unsupported network");
+        } 
+        else {
+            const proofPublic = [ethers.utils.formatBytes32String("0")];
+            try {
+                const contract = ContractInstance(signer, chain.id);
+
+                const clientKey = await getClientKey();
+                const msgHash = await contract.getMsgHash(address, clientKey);
+                
+                const receipt  = await signer?.provider?.getTransactionReceipt(msg);
+
+                signMessage({ msgHash })
+
+                if (receipt?.status === 1) {
+                    return msgHash;
+                }
+
+            } catch (e) {
+                throw(e);
+            } 
+        }
+    };
+
+    // /**
+    // * @description The following code defines an async function `joinTable` that sends a client-side generated key and signs the transaction with the user's wallet.
+    // */
+    // const joinTable = async () => {
+    //     if (!signer) {
+    //     return toast.error("Please connect your wallet");
+    //     } else if (!chain) {
+    //     return toast.error("You are connected to an unsupported network");
+    //     } 
+    //     else {
+    //         const proofPublic = [ethers.utils.formatBytes32String("0")];
+    //         try {
+    //             const contract = ContractInstance(signer, chain.id);
+
+    //             const clientKey = await getClientKey();
+    //             const msgHash = await contract.joinTable(address, clientKey);
+                
+    //             const receipt  = await signer?.provider?.getTransactionReceipt(msg);
+
+    //             signMessage({ msgHash })
+
+    //             if (receipt?.status === 1) {
+    //                 return msgHash;
+    //             }
+
+    //         } catch (e) {
+    //             throw(e);
+    //         } 
+    //     }
+    // };
+   
 
     const onSubmitClick = useCallback(() => {
         sendJsonMessage({ 
