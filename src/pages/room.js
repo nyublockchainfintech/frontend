@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import Table from "../components/Table";
 import ActionButton from "../components/ActionButton";
 import { useWebSocketContext } from "@/components/WebSocket";
@@ -6,6 +6,74 @@ import { useWebSocketContext } from "@/components/WebSocket";
 const PokerTablePage = () =>  {
   
   const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocketContext();
+
+  const [bet, setBet] = useState(0);
+
+  const action = useCallback((fold, call, raise) => {
+    if (fold) {
+      sendJsonMessage({ 
+        "MESSAGE TYPE": "ACTION",
+        "MESSAGE": {
+            "GAME_ID": "1",
+            "PLAYER_NAME": "John Doe",
+            "ACTION": "FOLD",
+            "AMOUNT": "0"
+        }
+    })
+    return;
+   } else if (call) {
+    sendJsonMessage({ 
+      "MESSAGE TYPE": "ACTION",
+      "MESSAGE": {
+          "GAME_ID": "1",
+          "PLAYER_NAME": "John Doe",
+          "ACTION": "CALL",
+          "AMOUNT": "0"
+      }
+   })
+    return;
+  } else if (raise) {
+    sendJsonMessage({ 
+      "MESSAGE TYPE": "ACTION",
+      "MESSAGE": {
+          "GAME_ID": "1",
+          "PLAYER_NAME": "John Doe",
+          "ACTION": "RAISE",
+          "AMOUNT": bet
+      }
+    })
+    setBet(0);
+  }})
+
+  const handleFold = async (event) => {
+    event.preventDefault();
+
+    try {
+      action(true, false, false)
+    } catch(err) {
+      // error handle
+    }
+  };
+
+  const handleCall = async (event) => {
+    event.preventDefault();
+
+    try {
+      action(false, true, false)
+    } catch(err) {
+      // error handle
+    }
+  };
+
+  const handleRaise = async (event) => {
+    event.preventDefault();
+
+    try {
+      action(false, false, true)
+    } catch(err) {
+      // error handle
+    }
+  };
 
   const sitAtTable = useCallback(() => {
     sendJsonMessage({ 
@@ -57,9 +125,10 @@ const PokerTablePage = () =>  {
       <Table players={players} />
       </div>
       <div className="fixed bottom-0 right-0 p-4 justify-center space-x-4">
-      <ActionButton text="Fold" />
-      <ActionButton text="Call" />
-      <ActionButton text="Raise" />
+      <ActionButton text="Fold" handle={handleFold}/>
+      <ActionButton text="Call" handle={handleCall}/>
+      <input type="number" placeholder="Bet" className="w-20 p-2 rounded text-black" onChange={setBet(e.target.value)}/>
+      <ActionButton text="Raise" handleRaise/>
       </div>
       <div className = "fixed bottom-0 left-0 p-4 justify-center space-x-4">
         <ActionButton text="Sit Out" />
